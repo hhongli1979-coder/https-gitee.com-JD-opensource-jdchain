@@ -20,6 +20,10 @@ JDChain 是京东集团自主研发的企业级区块链底层框架，支持多
 
 ## 🚀 快速部署到 Vercel / Quick Deploy to Vercel
 
+> 📖 **新手？** 查看 [快速开始指南 (QUICKSTART.md)](./QUICKSTART.md) 了解 5 分钟快速部署流程！
+> 
+> *New here? Check out the [Quick Start Guide (QUICKSTART.md)](./QUICKSTART.md) for a 5-minute deployment walkthrough!*
+
 ### 方法 1: 使用 Vercel CLI
 
 ```bash

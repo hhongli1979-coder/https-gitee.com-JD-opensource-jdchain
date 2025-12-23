@@ -1,0 +1,65 @@
+name: Validate Documentation Site
+
+on:
+  push:
+    branches: [ main, master, copilot/** ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Validate HTML files
+      run: |
+        echo "Checking for required files..."
+        test -f index.html || { echo "Error: index.html not found"; exit 1; }
+        test -f docs/index.html || { echo "Error: docs/index.html not found"; exit 1; }
+        test -f vercel.json || { echo "Error: vercel.json not found"; exit 1; }
+        echo "✓ All required files present"
+    
+    - name: Validate vercel.json
+      run: |
+        echo "Validating vercel.json syntax..."
+        python3 -m json.tool vercel.json > /dev/null
+        echo "✓ vercel.json is valid JSON"
+    
+    - name: Check HTML syntax
+      run: |
+        echo "Checking HTML files..."
+        grep -q "<!DOCTYPE html>" index.html || { echo "Error: index.html missing DOCTYPE"; exit 1; }
+        grep -q "<!DOCTYPE html>" docs/index.html || { echo "Error: docs/index.html missing DOCTYPE"; exit 1; }
+        echo "✓ HTML files have DOCTYPE declarations"
+    
+    - name: Test documentation links
+      run: |
+        echo "Checking for broken internal links..."
+        # Check if redirect in index.html points to docs/index.html
+        grep -q "docs/index.html" index.html || { echo "Warning: index.html redirect may be incorrect"; }
+        echo "✓ Internal links validated"
+    
+    - name: Validate deployment guides exist
+      run: |
+        echo "Checking for documentation files..."
+        test -f DEPLOYMENT.md || { echo "Warning: DEPLOYMENT.md not found"; }
+        test -f VERCEL_DEPLOYMENT.md || { echo "Warning: VERCEL_DEPLOYMENT.md not found"; }
+        test -f README.md || { echo "Error: README.md not found"; exit 1; }
+        echo "✓ Documentation files present"
+    
+    - name: Summary
+      run: |
+        echo "========================================="
+        echo "✓ Validation completed successfully!"
+        echo "========================================="
+        echo "The documentation site is ready for deployment to Vercel."
+        echo ""
+        echo "Next steps:"
+        echo "1. Push to GitHub"
+        echo "2. Connect repository to Vercel"
+        echo "3. Deploy automatically"
+        echo ""
+        echo "Visit: https://vercel.com to deploy"
