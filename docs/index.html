@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JDChain 部署指南 - JDChain Deployment Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 20px 0 10px 0;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .command {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .warning {
+            background: #fff5e6;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .success {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 10px 5px;
+            transition: transform 0.3s;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .topology {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .command {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔗 JDChain 部署指南</h1>
+            <p class="subtitle">JDChain Blockchain Deployment Guide</p>
+        </header>
+        
+        <div class="content">
+            <div class="section">
+                <h2>📖 关于 JDChain / About JDChain</h2>
+                <div class="card">
+                    <p>JDChain 是京东集团自主研发的区块链底层框架，支持企业级应用场景。本指南将帮助您快速部署和使用 JDChain。</p>
+                    <p style="margin-top: 10px;"><em>JDChain is a blockchain framework independently developed by JD.com, supporting enterprise-level application scenarios. This guide will help you quickly deploy and use JDChain.</em></p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🚀 快速开始 / Quick Start</h2>
+                
+                <h3>1. 克隆代码 / Clone Repository</h3>
+                <div class="command">git clone https://github.com/blockchain-jd-com/jdchain.git jdchain<br>cd jdchain</div>
+                
+                <h3>2. 选择分支 / Select Branch</h3>
+                <div class="warning">
+                    <strong>⚠️ 注意 / Warning:</strong>
+                    <ul>
+                        <li>不推荐使用 develop 分支，子模块代码可能未对齐</li>
+                        <li>建议切换到具体已发布的版本分支</li>
+                        <li>The develop branch is not recommended as submodule code may not be aligned</li>
+                        <li>It is recommended to switch to a specific released version branch</li>
+                    </ul>
+                </div>
+                <div class="command">git checkout master</div>
+                
+                <h3>3. 设置权限 / Set Permissions</h3>
+                <div class="command">chmod +x build/*.sh</div>
+                
+                <h3>4. 构建项目 / Build Project</h3>
+                
+                <div class="card">
+                    <h4>完整构建 / Full Build</h4>
+                    <div class="command">build/build.sh --update</div>
+                    
+                    <h4 style="margin-top: 20px;">跳过测试构建 / Build Without Tests</h4>
+                    <div class="command">build/build.sh --skipTests</div>
+                    
+                    <h4 style="margin-top: 20px;">首次构建 / First-time Build</h4>
+                    <div class="command">build/build.sh --update --skipTests</div>
+                </div>
+                
+                <div class="info">
+                    <strong>📦 构建参数说明 / Build Parameters:</strong>
+                    <ul>
+                        <li><code>--skipTests</code>: 跳过集成测试部分 / Skip integration tests</li>
+                        <li><code>--update</code>: 从远程仓库更新子模块 / Update submodules from remote repository</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>📦 构建产物 / Build Artifacts</h2>
+                <div class="success">
+                    <p>构建完成后，将在以下位置生成部署包：</p>
+                    <p><em>After the build is complete, deployment packages will be generated:</em></p>
+                    <ul>
+                        <li><strong>网关部署包 / Gateway Package:</strong> <code>jdchain-gateway-&lt;version&gt;.zip</code></li>
+                        <li><strong>节点部署包 / Peer Package:</strong> <code>jdchain-peer-&lt;version&gt;.zip</code></li>
+                        <li><strong>位置 / Location:</strong> <code>deploy-gateway/target</code> 和 <code>deploy-peer/target</code></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🌐 网络拓扑 / Network Topology</h2>
+                <div class="topology">
++---------------+
+|    Client     | (客户端 / Client)
++-------+-------+
+        |
+        v
++---------------+
+|    Gateway    | (网关节点 / Gateway Node)
++-------+-------+
+        |
+        v
++---------------+
+|    Peer 1     | (共识节点1 / Consensus Node 1)
++---------------+
+|    Peer 2     | (共识节点2 / Consensus Node 2)
++---------------+
+|    Peer 3     | (共识节点3 / Consensus Node 3)
++---------------+
+|    Peer N     | (共识节点N / Consensus Node N)
++---------------+</div>
+            </div>
+            
+            <div class="section">
+                <h2>💾 系统要求 / System Requirements</h2>
+                <div class="card">
+                    <ul>
+                        <li><strong>Java:</strong> JDK 8 或更高版本 / JDK 8 or higher</li>
+                        <li><strong>Maven:</strong> 3.6.0 或更高版本 / 3.6.0 or higher</li>
+                        <li><strong>操作系统 / OS:</strong> Linux / macOS / Windows</li>
+                        <li><strong>内存 / Memory:</strong> 建议 4GB 以上 / 4GB or more recommended</li>
+                        <li><strong>磁盘 / Disk:</strong> 建议 10GB 以上 / 10GB or more recommended</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🛠️ 使用工具 / Tools</h2>
+                
+                <h3>命令行工具 / Command Line Tool</h3>
+                <div class="card">
+                    <p>使用 <code>jdchain-cli</code> 可快速执行数据上链和链上数据查询</p>
+                    <p><em>Use <code>jdchain-cli</code> to quickly upload data to the chain and query data on the chain</em></p>
+                    <div class="command"># 数据上传 / Data upload<br>jdchain-cli tx upload --data &lt;your-data&gt;<br><br># 数据查询 / Data query<br>jdchain-cli query --key &lt;data-key&gt;</div>
+                </div>
+                
+                <h3>SDK</h3>
+                <div class="card">
+                    <p>JD Chain 提供了 Java 和 Go 版本的 SDK</p>
+                    <p><em>JD Chain provides Java and Go SDKs</em></p>
+                    <ul>
+                        <li><strong>Java SDK:</strong> Maven 依赖引入 / Maven dependency</li>
+                        <li><strong>Go SDK:</strong> 参照 framework-go 仓库 / Refer to framework-go repository</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🔧 故障排查 / Troubleshooting</h2>
+                
+                <div class="warning">
+                    <h4>构建失败 / Build Failures</h4>
+                    <ul>
+                        <li>检查 Java 版本 / Check Java version</li>
+                        <li>检查 Maven 配置 / Check Maven configuration</li>
+                        <li>检查网络连接 / Check network connection</li>
+                        <li>确认子模块正确更新 / Verify submodules are correctly updated</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <h4>启动失败 / Startup Failures</h4>
+                    <ul>
+                        <li>检查端口占用 / Check port usage</li>
+                        <li>检查配置文件 / Check configuration files</li>
+                        <li>查看日志文件 / Check log files</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🔗 相关链接 / Links</h2>
+                <div class="links">
+                    <a href="https://github.com/blockchain-jd-com/jdchain" class="button" target="_blank">📂 GitHub Repository</a>
+                    <a href="https://ledger.jd.com/" class="button" target="_blank">🌐 京东链官网</a>
+                    <a href="https://blockchain.jd.com/" class="button" target="_blank">🔗 京东智臻链</a>
+                    <a href="mailto:jdchain-support@jd.com" class="button">📧 联系支持</a>
+                </div>
+            </div>
+            
+            <div class="info" style="margin-top: 30px;">
+                <strong>📝 注意 / Note:</strong>
+                <p>JDChain 是一个企业级区块链平台，需要完整的基础设施部署（包括对等节点、网关等）。本文档站点可以部署到 Vercel 等静态托管平台，但实际的 JDChain 节点需要部署到支持 Java 应用的服务器环境。</p>
+                <p><em>JDChain is an enterprise-level blockchain platform that requires complete infrastructure deployment (including peer nodes, gateways, etc.). This documentation site can be deployed to static hosting platforms like Vercel, but actual JDChain nodes need to be deployed to server environments that support Java applications.</em></p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 JDChain Deployment Guide | 京东区块链</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">欢迎开发者积极参与 JD Chain 社区及代码开发活动</p>
+        </footer>
+    </div>
+</body>
+</html>
